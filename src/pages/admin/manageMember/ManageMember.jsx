@@ -46,7 +46,7 @@ const MembersManagement = () => {
   const handleDeleteMember = async (userId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8080/api/v1/user/delete/${userId}`,
+        `${import.meta.env.VITE_API_URL}/user/delete/${userId}`,
         {
           headers: { "Content-Type": "application/json" },
         }

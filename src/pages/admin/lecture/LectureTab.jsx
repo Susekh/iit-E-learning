@@ -13,11 +13,11 @@ import { Switch } from "@/components/ui/switch";
 import { useEditLectureMutation, useGetLectureByIdQuery, useRemoveLectureMutation } from "@/features/api/courseApi";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-const MEDIA_API = "http://localhost:8080/api/v1/media";
+const MEDIA_API = `${import.meta.env.VITE_API_URL}/media`;
 
 const LectureTab = () => {
   const [lectureTitle, setLectureTitle] = useState("");

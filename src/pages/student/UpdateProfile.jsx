@@ -9,7 +9,7 @@ function UpdateProfile() {
     // Fetch profile data when the component mounts or when `id` changes
     const fetchProfileData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/api/v1/getprofiledata`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/getprofiledata`, {
           method: "GET"
         });
         
