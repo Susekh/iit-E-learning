@@ -45,7 +45,6 @@ const MembersManagement = () => {
 
   const handleDeleteMember = async (userId) => {
     try {
-      // Using URL params to pass the userId
       const res = await axios.delete(
         `http://localhost:8080/api/v1/user/delete/${userId}`,
         {
@@ -53,21 +52,21 @@ const MembersManagement = () => {
         }
       );
       const data = res.data;
-      toast.success(data.message); 
+      toast.success(data.message);
       window.location.reload();
     } catch (err) {
       console.error("Error deleting user:", err);
-      toast.error("Failed to delete user"); // Show error message if something goes wrong
+      toast.error("Failed to delete user");
     }
   };
-  
+
   return (
     <div className="container mx-auto mt-10 p-6 rounded-md bg-gray-900 min-h-screen">
-      <div className="mb-6 flex justify-between items-center">
+      <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <Select
           value={selectedRole}
           onValueChange={handleRoleChange}
-          className="w-48 bg-gray-700 text-white border border-gray-600 rounded-md shadow-md"
+          className="w-full md:w-48 bg-gray-700 text-white border border-gray-600 rounded-md shadow-md"
         >
           <SelectTrigger>
             <SelectValue placeholder="Select Role" />
@@ -80,7 +79,7 @@ const MembersManagement = () => {
 
         <Button
           onClick={handleAddMember}
-          className="ml-4 bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className="w-full md:w-auto bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
           Add New Member
         </Button>

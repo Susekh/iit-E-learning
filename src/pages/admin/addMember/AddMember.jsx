@@ -2,23 +2,37 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useAddMemberMutation } from "@/features/api/authApi";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 const AddMember = () => {
   const [memberInput, setMemberInput] = useState({
     name: "",
     email: "",
     password: "",
-    role: "student", // Default role, can be changed by the form
-    regNo: "", // Registration Number state
+    role: "student",
+    regNo: "",
   });
 
-  const [addMember, { data, error, isLoading, isSuccess }] = useAddMemberMutation();
+  const [addMember, { data, error, isLoading, isSuccess }] =
+    useAddMemberMutation();
   const navigate = useNavigate();
 
   const changeInputHandler = (e) => {
@@ -54,65 +68,68 @@ const AddMember = () => {
   }
 
   return (
-    <div className="flex items-center justify-center mt-20">
-      <Card className="w-[400px]">
-        <CardHeader>
-          <CardTitle>Add Member</CardTitle>
-          <CardDescription>Add a new instructor or student.</CardDescription>
+    <div className="flex items-center rounded-lg justify-center min-h-screen px-4 bg-gradient-to-b from-white to-blue-50 dark:from-[#121212] dark:to-[#1a1a1a]">
+      <Card className="w-full max-w-md shadow-lg rounded-2xl border dark:border-gray-700">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl">Add New Member</CardTitle>
+          <CardDescription>
+            Fill in the details to add a new student or instructor.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
-          {/* Name Input */}
+
+        <CardContent className="space-y-4">
+          {/* Name */}
           <div className="space-y-1">
             <Label htmlFor="name">Name</Label>
             <Input
+              id="name"
               type="text"
               name="name"
               value={memberInput.name}
               onChange={changeInputHandler}
-              placeholder="Enter name"
-              required
+              placeholder="John Doe"
             />
           </div>
 
-          {/* Email Input */}
+          {/* Email */}
           <div className="space-y-1">
             <Label htmlFor="email">Email</Label>
             <Input
+              id="email"
               type="email"
               name="email"
               value={memberInput.email}
               onChange={changeInputHandler}
-              placeholder="Enter email"
-              required
+              placeholder="john@example.com"
             />
           </div>
 
-          {/* Password Input */}
+          {/* Password */}
           <div className="space-y-1">
             <Label htmlFor="password">Password</Label>
             <Input
+              id="password"
               type="password"
               name="password"
               value={memberInput.password}
               onChange={changeInputHandler}
-              placeholder="Enter password"
-              required
+              placeholder="••••••••"
             />
           </div>
 
-          {/* Role Selection */}
+          {/* Role */}
           <div className="space-y-1">
             <Label htmlFor="role">Role</Label>
             <Select
               name="role"
               value={memberInput.role}
-              onValueChange={(value) => setMemberInput({ ...memberInput, role: value })}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-600 dark:bg-[#2c2c3e] dark:text-white dark:border-[#3f3f4a]"
+              onValueChange={(value) =>
+                setMemberInput({ ...memberInput, role: value })
+              }
             >
-              <SelectTrigger className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-600 dark:bg-[#2c2c3e] dark:text-white">
+              <SelectTrigger id="role" className="w-full">
                 <SelectValue placeholder="Select Role" />
               </SelectTrigger>
-
               <SelectContent>
                 <SelectItem value="student">Student</SelectItem>
                 <SelectItem value="instructor">Instructor</SelectItem>
@@ -120,26 +137,32 @@ const AddMember = () => {
             </Select>
           </div>
 
-          {/* Registration Number (only for students) */}
+          {/* Registration Number (only if role is student) */}
           {memberInput.role === "student" && (
             <div className="space-y-1">
               <Label htmlFor="regNo">Registration Number</Label>
               <Input
+                id="regNo"
                 type="text"
                 name="regNo"
                 value={memberInput.regNo}
                 onChange={changeInputHandler}
-                placeholder="Enter registration number"
-                required={memberInput.role === "student"}
+                placeholder="e.g., 2024-CS-123"
               />
             </div>
           )}
         </CardContent>
+
         <CardFooter>
-          <Button disabled={isLoading} onClick={handleAddMember}>
+          <Button
+            disabled={isLoading}
+            onClick={handleAddMember}
+            className="w-full"
+          >
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait...
               </>
             ) : (
               "Add Member"
