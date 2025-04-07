@@ -58,7 +58,8 @@ const Login = () => {
     }
   };
 
-  const handleRegistration = async (type) => {
+  const handleRegistration = async (e, type) => {
+    e.preventDefault(); // Prevent default form submission
     const inputData = type === "signup" ? signupInput : loginInput;
     const action = type === "signup" ? registerUser : loginUser;
     await action(inputData);
@@ -76,7 +77,7 @@ const Login = () => {
       navigate("/");
     }
     if (loginError) {
-      toast.error(loginError.data.message || "login Failed");
+      toast.error(loginError.data.message || "Login Failed");
     }
   }, [
     loginIsLoading,
@@ -105,7 +106,7 @@ const Login = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <form onSubmit={() => handleRegistration("signup")}>
+              <form onSubmit={(e) => handleRegistration(e, "signup")}>
                 <div className="space-y-1">
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -114,7 +115,7 @@ const Login = () => {
                     value={signupInput.name}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="Eg. patel"
-                    required="true"
+                    required
                   />
                 </div>
                 <div className="space-y-1">
@@ -125,7 +126,7 @@ const Login = () => {
                     value={signupInput.email}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="Eg. patel@gmail.com"
-                    required="true"
+                    required
                   />
                 </div>
                 <div className="space-y-1">
@@ -136,13 +137,13 @@ const Login = () => {
                     value={signupInput.password}
                     onChange={(e) => changeInputHandler(e, "signup")}
                     placeholder="Eg. xyz"
-                    required="true"
+                    required
                   />
                 </div>
                 <CardFooter>
                   <Button
                     disabled={registerIsLoading}
-                    type="submit" // Important: Set the button type to submit
+                    type="submit" // Set button type to submit for form submission
                   >
                     {registerIsLoading ? (
                       <>
@@ -169,7 +170,7 @@ const Login = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <form onSubmit={() => handleRegistration("login")}>
+              <form onSubmit={(e) => handleRegistration(e, "login")}>
                 <div className="space-y-1">
                   <Label htmlFor="current">Email</Label>
                   <Input
@@ -178,7 +179,7 @@ const Login = () => {
                     value={loginInput.email}
                     onChange={(e) => changeInputHandler(e, "login")}
                     placeholder="Eg. patel@gmail.com"
-                    required="true"
+                    required
                   />
                 </div>
                 <div className="space-y-1">
@@ -189,13 +190,13 @@ const Login = () => {
                     value={loginInput.password}
                     onChange={(e) => changeInputHandler(e, "login")}
                     placeholder="Eg. xyz"
-                    required="true"
+                    required
                   />
                 </div>
                 <CardFooter>
                   <Button
                     disabled={loginIsLoading}
-                    type="submit" // Important: Set the button type to submit
+                    type="submit" // Set button type to submit for form submission
                   >
                     {loginIsLoading ? (
                       <>
