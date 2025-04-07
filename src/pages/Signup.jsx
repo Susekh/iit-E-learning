@@ -1,4 +1,3 @@
-// McgPr7oX7v1mMcbN
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,7 +16,7 @@ import {
 } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"; // Make sure to import useParams here
 import { toast } from "sonner";
 
 const Login = () => {
@@ -28,7 +27,7 @@ const Login = () => {
   });
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
 
-  const {type} = useParams;
+  const { type } = useParams(); // Call useParams() correctly
 
   const [
     registerUser,
@@ -66,17 +65,17 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if(registerIsSuccess && registerData){
-      toast.success(registerData.message || "Signup successful.")
+    if (registerIsSuccess && registerData) {
+      toast.success(registerData.message || "Signup successful.");
     }
-    if(registerError){
+    if (registerError) {
       toast.error(registerError.data.message || "Signup Failed");
     }
-    if(loginIsSuccess && loginData){
+    if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login successful.");
       navigate("/");
     }
-    if(loginError){ 
+    if (loginError) {
       toast.error(loginError.data.message || "login Failed");
     }
   }, [
@@ -208,4 +207,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

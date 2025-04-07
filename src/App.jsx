@@ -27,6 +27,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import AddMember from "./pages/admin/addMember/AddMember";
 import MembersManagement from "./pages/admin/manageMember/ManageMember";
 import UpdateProfile from "./pages/student/UpdateProfile";
+import Chatbot from "./components/ChatBot";
 
 // Router setup with the future flag for fetcher persistence (v7)
 const appRouter = createBrowserRouter(
@@ -75,6 +76,14 @@ const appRouter = createBrowserRouter(
               <Profile />
             </ProtectedRoute>
           ),
+        },
+        {
+          path : "chatbot",
+          element : (
+            <ProtectedRoute>
+              <Chatbot/>
+            </ProtectedRoute>
+          )
         },
         {
           path: "course/search",
