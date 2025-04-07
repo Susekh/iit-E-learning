@@ -15,8 +15,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
+interface LoginInput {
+  email: string;
+  password: string;
+}
+
 const Login = () => {
-  const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+  const [loginInput, setLoginInput] = useState<LoginInput>({
+    email: "",
+    password: "",
+  });
 
   const [
     loginUser,
@@ -29,7 +37,7 @@ const Login = () => {
   ] = useLoginUserMutation();
   const navigate = useNavigate();
 
-  const changeInputHandler = (e) => {
+  const changeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginInput({ ...loginInput, [name]: value });
   };
@@ -39,14 +47,16 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (loginIsSuccess && loginData) {
-      toast.success(loginData.message || "Login successful.");
+    if (loginIsSuccess) {
+      const { message } = loginData || {}; // optional chaining
+      toast.success(message || "Login successful.");
       navigate("/"); // Redirect to the home page or any other page after successful login
     }
     if (loginError) {
-      toast.error(loginError.data.message || "Login failed");
+      const errorMessage = loginError.data?.message || "Login failed";
+      toast.error(errorMessage);
     }
-  }, [loginIsLoading, loginData, loginError]);
+  }, [loginIsSuccess, loginData, loginError, navigate]);
 
   return (
     <div className="flex items-center w-full justify-center mt-20">
@@ -64,7 +74,7 @@ const Login = () => {
               value={loginInput.email}
               onChange={changeInputHandler}
               placeholder="Eg. patel@gmail.com"
-              required="true"
+              required
             />
           </div>
           <div className="space-y-1">
@@ -75,18 +85,16 @@ const Login = () => {
               value={loginInput.password}
               onChange={changeInputHandler}
               placeholder="Eg. xyz"
-              required="true"
+              required
             />
           </div>
         </CardContent>
         <CardFooter>
-          <Button
-            disabled={loginIsLoading}
-            onClick={handleLogin}
-          >
+          <Button disabled={loginIsLoading} onClick={handleLogin}>
             {loginIsLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
               </>
             ) : (
               "Login"
@@ -99,4 +107,3 @@ const Login = () => {
 };
 
 export default Login;
-  
